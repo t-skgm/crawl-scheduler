@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  digdag:
+    build:
+      context: .
+      dockerfile: digdag/Dockerfile
+    ports:
+      - "65432:65432"
+      - "65433:65433"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/tmp:/tmp"
+    links:
+      - postgresql
+    networks:
+      - scheduler_net
+  postgresql:
+    image: "postgres:9"
+    command: postgres -c 'max_connections=100'
+    environment:
+      POSTGRES_USER: "digdag"
+      POSTGRES_PASSWORD: "digdag"
+      POSTGRES_DB: "digdag"
+    ports:
+      - "5432:5432"
+    volumes:
+      - "db:/var/lib/postgresql/data"
+    networks:
+      - scheduler_net
+  mongodb:
+    image: "mongo:latest"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongodb:/data/db"
+    networks:
+      - scheduler_net
+
+volumes:
+  db:
+  mongodb:
+
+networks:
+  scheduler_net:
+    name: scheduler_net

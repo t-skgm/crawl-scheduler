@@ -1,0 +1,13 @@
+timezone: Asia/Tokyo
+
+# _export:
+#   url: "https://google.com"
+
++setup:
+  echo>: start ${session_time}
+
++crawl:
+  sh>: ./crawl.sh "${url}"
+
++teardown:
+  echo>: finish ${session_time}
