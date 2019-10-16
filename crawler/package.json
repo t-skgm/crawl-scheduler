@@ -1,0 +1,15 @@
+{
+  "name": "crawler-puppeteer",
+  "version": "0.0.1",
+  "description": "crawler with puppeteer",
+  "license": "NO LICENSE",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "mongodb": "3.3.2",
+    "puppeteer": "1.20.0"
+  }
+}
